@@ -1,3 +1,5 @@
+### Latin Square Solver
+### Nate Watson 09/05/2024
 ### recursive program that can solve 3x3 sudoku boards
 
 0 jumpn 178 #:main:
@@ -179,6 +181,7 @@
 142 jumpn 74 #:fail: 
 
 ### make frame function
+### each frame consists of: stack pointer, return pointer, number used for latin square (bottom to top)
 #:firstmakeframe: #after building board pointer is already at next open space
 143 copy r14 r15
 144 addn r15 -1
@@ -201,7 +204,7 @@
 157 storer r6 r15
 158 addn r15 1
 
-#:makeframe:
+#:makeframe: 
 159 addn r15 -2 #point to char value
 160 loadr r7 r15 #get char value
 161 addn r15 2 #back to stack pointer
@@ -225,20 +228,20 @@
 
 ### main
 #:main:
-178 setn r15 127
-179 add r15 r15 r15
-180 addn r15 1
+178 setn r15 127        #
+179 add r15 r15 r15     # set active stack pointer r15 to 255
+180 addn r15 1          #
 181 copy r13 r15 # r13 is the pointer for the board 
-#r15 is the active stack pointer, starting at 255
 182 setn r2 9 #counter for num of inputs
 #:read:
-183 read r1
+### first store all the inputs for the square at the bottom of the stack
+183 read r1        
 184 storer r1 r15
 185 addn r2 -1
 186 addn r15 -1
 187 jnezn r2 183 #:read: #when loop ends, r15 is at 246, r2 is at 0
 188 setn r7 0
-189 calln r6 143 #:firstmakeframe:
+189 calln r6 143 #:firstmakeframe: # make first stack frame
 190 jumpn 74 #:fail:
 
 
